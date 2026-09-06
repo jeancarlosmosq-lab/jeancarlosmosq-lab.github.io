@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jean Mosquea — Apps</title>
+<style>
+  :root { color-scheme: light dark; --bg:#faf9f7; --fg:#1c1b19; --dim:#5f5c57; --line:#e2ded7; --accent:#1a56db; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#141312; --fg:#f2efe9; --dim:#a5a09a; --line:#2c2a27; --accent:#7aa2f7; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+  .sub { color: var(--dim); margin: 0 0 2.5rem; }
+  .app { border:1px solid var(--line); border-radius:14px; padding:1.5rem; }
+  .app h2 { margin: 0 0 .35rem; font-size:1.25rem; }
+  .app p { margin: 0 0 1rem; color: var(--dim); }
+  ul { margin:0 0 1.25rem; padding-left:1.1rem; color:var(--dim); }
+  li { margin:.2rem 0; }
+  a { color: var(--accent); }
+  .cta { display:inline-block; text-decoration:none; background:var(--accent); color:#fff;
+    padding:.6rem 1.1rem; border-radius:9px; font-weight:600; }
+  footer { margin-top:2.5rem; padding-top:1.25rem; border-top:1px solid var(--line);
+    color:var(--dim); font-size:.9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Jean Mosquea</h1>
+  <p class="sub">Independent app developer.</p>
+
+  <section class="app">
+    <h2>Tranque: Dominoes Scorekeeper</h2>
+    <p>A scorekeeper for Dominican-style partnership dominó — for the table, in English and Español.</p>
+    <ul>
+      <li>Count from photo: photograph the tiles left in hand and it counts the pips</li>
+      <li>Capicúa, tranque, pollona — scored the way tables actually play</li>
+      <li>Player profiles and full game history</li>
+      <li>Music search and playback without leaving the app</li>
+    </ul>
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.bayonne.dominoscorekeeper">Get it on Google Play</a>
+  </section>
+
+  <footer>
+    <p>
+      <a href="https://jeancarlosmosq-lab.github.io/tranque-privacy/">Tranque privacy policy</a>
+      &middot; <a href="mailto:jeancarlosmosq@gmail.com">jeancarlosmosq@gmail.com</a>
+    </p>
+  </footer>
+</main>
+</body>
+</html>
