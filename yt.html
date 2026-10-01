@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Player</title>
+<!--
+  YouTube embed shim for JP Dominoes Scorekeeper on iOS.
+
+  WKWebView serves the app from a custom scheme, so the page has no usable web
+  origin and sends no Referer. YouTube answers an embed request like that with
+  error 150/153 ("owner does not allow embedded playback"), even for videos that
+  embed fine elsewhere. Android is unaffected: Capacitor serves it from
+  https://localhost.
+
+  This page is a real https origin, so the player loaded from here gets a valid
+  Referer. The app points its iframe at yt.html?v=<id>; messages are relayed in
+  both directions so the existing enablejsapi commands keep working unchanged.
+-->
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+</head>
+<body>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  // Video ids are [A-Za-z0-9_-]{11}; sanitise rather than trust the query.
+  var id = (params.get("v") || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 24);
+  if (!id) return;
+
+  var qs = new URLSearchParams({
+    autoplay: params.get("autoplay") === "0" ? "0" : "1",
+    mute: params.get("mute") === "1" ? "1" : "0",
+    playsinline: "1",
+    enablejsapi: "1",
+    rel: "0",
+    controls: params.get("controls") === "1" ? "1" : "0",
+    origin: location.origin
+  });
+
+  var player = document.createElement("iframe");
+  player.title = "player";
+  player.allow = "autoplay; encrypted-media; fullscreen";
+  player.setAttribute("frameborder", "0");
+  player.src = "https://www.youtube.com/embed/" + id + "?" + qs.toString();
+  document.body.appendChild(player);
+
+  // Two-way relay. The app posts {event:"command", func, args} as it always
+  // has; replies and player events travel back the same way.
+  window.addEventListener("message", function (e) {
+    try {
+      if (e.source === player.contentWindow) {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(e.data, "*");
+        }
+      } else if (e.source === window.parent) {
+        player.contentWindow.postMessage(e.data, "*");
+      }
+    } catch (_) { /* cross-origin timing; nothing to do */ }
+  });
+})();
+</script>
+</body>
+</html>
